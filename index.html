@@ -11,17 +11,19 @@
 <style>
   /* ── PALETTE ── */
   :root {
-    --lime:     #c8e04a;   /* hero background */
+    --lime:     #c8e04a;
     --black:    #111111;
     --white:    #ffffff;
     --offwhite: #f8f8f5;
     --border:   #e2e2dc;
     --muted:    #666660;
     --faint:    #999992;
-    --coral:    #e8503a;   /* stag accent */
-    --navy:     #1d3557;   /* wedding accent */
-    --dot:      #c8e04a;   /* timeline dot (lime on white bg) */
+    --coral:    #e8503a;
+    --navy:     #1d3557;
+    --dot:      #c8e04a;
     --dot-border: #111111;
+    --green:    #2a7a4f;
+    --green-light: #e6f4ed;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,40 +42,104 @@
   a:hover { text-decoration: underline; }
 
   /* ══════════════════════════════
-     HERO
+     ANNOUNCEMENT BANNER
   ══════════════════════════════ */
-  .hero {
-    background: var(--lime);
+  .announce-banner {
+    background: var(--coral);
+    color: var(--white);
+    padding: 14px 20px;
+    text-align: center;
     position: relative;
-    overflow: hidden;
-    min-height: 420px;
-    display: grid;
-    grid-template-columns: 1fr 340px;
     border-bottom: 3px solid var(--black);
   }
 
-  /* Big oversized type behind everything */
-  .hero-bg-text {
+  .announce-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .announce-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .announce-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .announce-cta {
+    background: var(--black);
+    color: var(--lime);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .announce-cta:hover { background: #333; text-decoration: none; }
+
+  /* ══════════════════════════════
+     HERO — full bleed photo
+  ══════════════════════════════ */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 560px;
+    border-bottom: 3px solid var(--black);
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-photo-bg {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(160px, 22vw, 260px);
-    line-height: 0.85;
-    color: rgba(0,0,0,0.10);
-    pointer-events: none;
-    user-select: none;
-    text-align: right;
-    letter-spacing: -4px;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    z-index: 0;
+  }
+
+  /* gradient: transparent top → heavy black bottom */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0.15) 40%,
+      rgba(0,0,0,0.82) 100%
+    );
+    z-index: 1;
+  }
+
+  /* Lime slash accent — top-left corner */
+  .hero-lime-slash {
+    position: absolute;
+    top: 0; left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--lime);
+    z-index: 2;
   }
 
   .hero-text {
-    padding: 48px 48px 48px 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     position: relative;
-    z-index: 2;
+    z-index: 3;
+    padding: 48px 48px 48px 54px;
+    width: 100%;
   }
 
   .hero-eyebrow {
@@ -82,8 +148,8 @@
     font-weight: 600;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: var(--black);
-    opacity: 0.6;
+    color: var(--lime);
+    opacity: 0.9;
     margin-bottom: 12px;
   }
 
@@ -91,62 +157,50 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(64px, 10vw, 120px);
     line-height: 0.9;
-    color: var(--black);
+    color: var(--white);
     letter-spacing: 1px;
   }
 
-  .hero-title .name-line {
-    display: block;
-  }
+  .hero-title .name-line { display: block; }
 
   .hero-title .stag-line {
     display: block;
-    color: var(--white);
-    -webkit-text-stroke: 2px var(--black);
+    color: var(--lime);
   }
 
   .hero-meta-row {
     display: flex;
-    gap: 28px;
+    gap: 10px;
     margin-top: 24px;
     flex-wrap: wrap;
   }
 
   .hero-pill {
-    background: var(--black);
-    color: var(--lime);
+    background: rgba(0,0,0,0.55);
+    color: var(--white);
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 7px 16px;
+    padding: 6px 14px;
     display: inline-block;
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
   }
 
-  /* Photo panel */
-  .hero-photo-panel {
-    position: relative;
-    z-index: 2;
-    border-left: 3px solid var(--black);
+  /* settle-up pill in hero — lime highlight */
+  .hero-pill.pay-pill {
+    background: var(--coral);
+    color: var(--white);
+    border-color: var(--coral);
+    text-decoration: none;
   }
+  .hero-pill.pay-pill:hover { background: #c83e2a; text-decoration: none; }
 
-  /*
-   * IMAGE DIMENSIONS NOTE:
-   * The photo slot is 340px wide and 420px tall (roughly portrait 4:5 ratio).
-   * For best results, use an image at least 680×840px (2x for retina).
-   * Ideal: a PNG with a transparent or removed background — the subject
-   * 'cut out' against the lime background looks great.
-   * Save your file as: joe.jpg (or joe.png) in the same folder as this HTML.
-   * The src below already points to that path.
-   */
-  .hero-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
+  /* hidden — no longer needed */
+  .hero-photo-panel { display: none; }
+  .hero-bg-text { display: none; }
 
   /* ══════════════════════════════
      STICKY NAV
@@ -174,6 +228,10 @@
     border-right: 1px solid rgba(255,255,255,0.08);
     white-space: nowrap;
     transition: color 0.15s, background 0.15s;
+  }
+  .sticky-nav a.highlight {
+    color: var(--lime);
+    background: rgba(200,224,74,0.12);
   }
   .sticky-nav a:hover { color: var(--lime); text-decoration: none; }
 
@@ -254,7 +312,240 @@
   }
 
   /* ══════════════════════════════
-     WEATHER  (hardcoded AccuWeather data)
+     SETTLE UP — PAYMENT OPTIONS
+  ══════════════════════════════ */
+  .pay-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    background: var(--black);
+    border: 3px solid var(--black);
+    margin-bottom: 40px;
+  }
+
+  .pay-card {
+    background: var(--white);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pay-card-icon {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+
+  .pay-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pay-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--black);
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+
+  .pay-card-detail {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .pay-card-detail strong {
+    color: var(--black);
+    font-weight: 600;
+  }
+
+  .pay-card-action {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--black);
+    color: var(--lime);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    text-decoration: none;
+    transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .pay-card-action:hover { background: #333; text-decoration: none; }
+
+  /* ══════════════════════════════
+     SETTLE UP — COSTS TABLE
+  ══════════════════════════════ */
+  .costs-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .costs-total-pill {
+    background: var(--black);
+    color: var(--lime);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    padding: 8px 20px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 3px;
+    background: var(--black);
+    border: 3px solid var(--black);
+  }
+
+  .person-card {
+    background: var(--white);
+    overflow: hidden;
+    transition: background 0.15s;
+  }
+
+  /* PAID STATE — easy to toggle: add class "paid" to .person-card */
+  .person-card.paid {
+    background: var(--green-light);
+  }
+
+  .person-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 14px;
+    cursor: pointer;
+    gap: 12px;
+    user-select: none;
+  }
+
+  .person-card-header:hover { background: rgba(0,0,0,0.02); }
+  .person-card.paid .person-card-header:hover { background: rgba(42,122,79,0.05); }
+
+  .person-name-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .person-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--black);
+    letter-spacing: 0.5px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .person-card.paid .person-name {
+    color: var(--green);
+  }
+
+  .paid-badge {
+    display: none;
+    background: var(--green);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+  }
+  .person-card.paid .paid-badge { display: inline-block; }
+
+  .person-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--black);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .person-card.paid .person-amount {
+    color: var(--green);
+  }
+
+  .expand-arrow {
+    font-size: 12px;
+    color: var(--faint);
+    transition: transform 0.2s;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+
+  .person-card.open .expand-arrow { transform: rotate(180deg); }
+
+  .person-breakdown {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 0 20px 16px;
+  }
+
+  .person-card.open .person-breakdown { display: block; }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+    gap: 12px;
+  }
+
+  .breakdown-row:last-child { border-bottom: none; }
+
+  .breakdown-label {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  .breakdown-amount {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    white-space: nowrap;
+  }
+
+  .breakdown-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0 4px;
+    gap: 12px;
+    margin-top: 4px;
+    border-top: 2px solid var(--black);
+  }
+
+  .breakdown-total-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+
+  .breakdown-total-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--black);
+  }
+
+  /* ══════════════════════════════
+     WEATHER
   ══════════════════════════════ */
   .weather-grid {
     display: grid;
@@ -322,7 +613,6 @@
     padding: 60px 40px 0;
   }
 
-  /* Day tabs */
   .day-tabs {
     display: flex;
     border-bottom: 3px solid var(--black);
@@ -347,7 +637,6 @@
   .day-tab:hover { color: var(--black); text-decoration: none; }
   .day-tab.active { color: var(--black); border-bottom-color: var(--lime); }
 
-  /* Day block */
   .day-block {
     scroll-margin-top: 100px;
     border-bottom: 1px solid var(--border);
@@ -382,12 +671,6 @@
     margin-left: auto;
   }
 
-  /* ── TIMELINE ──
-     Each item:
-       .tl-item
-         .tl-gutter  (fixed 40px, dot + vertical line)
-         .tl-content (time + title + desc)
-  ── */
   .timeline { padding: 0 0 8px; }
 
   .tl-item {
@@ -396,7 +679,6 @@
     min-height: 48px;
   }
 
-  /* Vertical line through gutter, not on last item */
   .tl-item:not(:last-child) .tl-gutter::after {
     content: '';
     position: absolute;
@@ -474,11 +756,7 @@
     background: var(--lime);
     transition: background 0.15s, color 0.15s;
   }
-  .tl-link:hover {
-    background: var(--black);
-    color: var(--lime);
-    text-decoration: none;
-  }
+  .tl-link:hover { background: var(--black); color: var(--lime); text-decoration: none; }
   .tl-link::after { content: ' ↗'; }
 
   .tl-tag {
@@ -646,10 +924,8 @@
      RESPONSIVE
   ══════════════════════════════ */
   @media (max-width: 720px) {
-    .hero                 { grid-template-columns: 1fr; min-height: unset; }
-    .hero-photo-panel     { height: 280px; border-left: none; border-top: 3px solid var(--black); }
-    .hero-text            { padding: 36px 24px; justify-content: flex-start; }
-    .hero-bg-text         { font-size: 120px; }
+    .hero                 { min-height: 480px; }
+    .hero-text            { padding: 36px 24px 36px 30px; }
     .countdowns           { grid-template-columns: 1fr; }
     .countdown-box        { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px; }
     .weather-grid         { grid-template-columns: 1fr; }
@@ -659,14 +935,28 @@
     .tl-content           { padding-left: 12px; }
     .day-header           { padding: 24px 0 16px; }
     .day-tabs             { margin: 16px 0 0; }
+    .pay-options          { grid-template-columns: 1fr; }
+    .person-grid          { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- ══ ANNOUNCEMENT BANNER ══ -->
+<div class="announce-banner">
+  <div class="announce-banner-inner">
+    <span class="announce-icon">💸</span>
+    <span class="announce-text">The stag is done. The costs are in. Time to settle up.</span>
+    <a href="#settle-up" class="announce-cta">See what you owe ↓</a>
+  </div>
+</div>
+
 <!-- ══ HERO ══ -->
 <div class="hero">
-  <div class="hero-bg-text">STAG<br>2026</div>
+  <img class="hero-photo-bg" src="joe.jpg" alt="Joe Tankel"
+       onerror="this.style.display='none'; this.parentElement.style.background='#111';">
+  <div class="hero-overlay"></div>
+  <div class="hero-lime-slash"></div>
 
   <div class="hero-text">
     <div class="hero-eyebrow">Lisbon · 14–16 May 2026</div>
@@ -678,35 +968,8 @@
       <span class="hero-pill">📍 Lisbon</span>
       <span class="hero-pill">16 Guests</span>
       <span class="hero-pill">💍 7 June 2026</span>
+      <a href="#settle-up" class="hero-pill pay-pill">💸 Costs are in — Settle Up</a>
     </div>
-  </div>
-
-  <div class="hero-photo-panel">
-    <!--
-      ════════════════════════════════════════
-      HOW TO SWAP THIS PHOTO (GitHub hosting)
-      ════════════════════════════════════════
-      1. Recommended image size: 680 × 840px (portrait, roughly 4:5)
-         For best effect: a photo with a plain/removed background,
-         or a bold close-up. PNG with transparency works great.
-
-      2. Save your image file as:  joe.jpg
-         (or joe.png — update the src below to match)
-
-      3. In your GitHub repo, place the file in the SAME folder
-         as this HTML file, e.g.:
-           your-repo/
-             index.html      ← this file
-             joe.jpg         ← your photo
-
-      4. That's it — the src="joe.jpg" below will resolve automatically.
-         GitHub Pages will serve it. No other changes needed.
-      ════════════════════════════════════════
-    -->
-    <img class="hero-photo"
-         src="joe.jpg"
-         alt="Joe Tankel"
-         onerror="this.parentElement.style.background='#c8e04a'; this.style.display='none';">
   </div>
 </div>
 
@@ -719,6 +982,7 @@
   <a href="#day2">Sat 16</a>
   <a href="#rooms">Rooms</a>
   <a href="#notes">Good to Know</a>
+  <a href="#settle-up" class="highlight">💸 Settle Up</a>
 </nav>
 
 <!-- ══ COUNTDOWNS ══ -->
@@ -735,7 +999,7 @@
   </div>
 </div>
 
-<!-- ══ WEATHER  (AccuWeather forecast hardcoded) ══ -->
+<!-- ══ WEATHER ══ -->
 <div class="page-section" id="weather" style="background: var(--offwhite);">
   <div class="section-inner">
     <div class="section-eyebrow">Forecast · AccuWeather</div>
@@ -1072,19 +1336,538 @@
         <div class="note-icon">💸</div>
         <div class="note-body">
           <div class="note-title">Money &amp; costs</div>
-          <div class="note-desc">If everyone's happy, we can sort out who owes what when we get back. We'll cover all meals, accommodation and club entry — so no need to worry about it on the weekend.</div>
+          <div class="note-desc">All meals, accommodation and club entry were covered upfront — the full breakdown of what each person owes is in the Settle Up section below.</div>
         </div>
       </div>
 
       <div class="note-item">
-  <div class="note-icon">🚗</div>
-  <div class="note-body">
-    <div class="note-title">Transport</div>
-    <div class="note-desc">Get an Uber from the airport — we'll be getting Ubers all weekend. They're dirt cheap in Lisbon.</div>
+        <div class="note-icon">🚗</div>
+        <div class="note-body">
+          <div class="note-title">Transport</div>
+          <div class="note-desc">Get an Uber from the airport — we'll be getting Ubers all weekend. They're dirt cheap in Lisbon.</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
-      
+
+<!-- ══ SETTLE UP ══ -->
+<div class="page-section" id="settle-up" style="background: var(--black);">
+  <div class="section-inner">
+    <div class="section-eyebrow" style="color: var(--lime);">Time to Pay Up</div>
+    <div class="section-heading" style="color: var(--white);">Settle Up</div>
+    <div class="section-sub" style="color: rgba(255,255,255,0.5);">The stag is done. Here's what everyone owes. Tap your name to see the full breakdown.</div>
+
+    <!-- PAYMENT OPTIONS -->
+    <div class="pay-options">
+
+      <div class="pay-card">
+        <div class="pay-card-icon">🏦</div>
+        <div class="pay-card-label">Bank Transfer</div>
+        <div class="pay-card-title">Barclays</div>
+        <div class="pay-card-detail">
+          <strong>Account name:</strong> A N Lewis<br>
+          <strong>Sort code:</strong> 20-00-00<br>
+          <strong>Account no:</strong> 12345678<br>
+          <br>
+          Use your name as the reference.
+        </div>
+      </div>
+
+      <div class="pay-card">
+        <div class="pay-card-icon">🔄</div>
+        <div class="pay-card-label">Instant · No account needed</div>
+        <div class="pay-card-title">Revolut</div>
+        <div class="pay-card-detail">
+          Pay directly by card — no Revolut account required. Just click the link and pay with any debit or credit card.
+        </div>
+        <a href="https://revolut.me/YOUR-USERNAME-HERE" target="_blank" class="pay-card-action">Pay via Revolut ↗</a>
+      </div>
+
+      <div class="pay-card">
+        <div class="pay-card-icon">🅿️</div>
+        <div class="pay-card-label">Send a payment request</div>
+        <div class="pay-card-title">PayPal</div>
+        <div class="pay-card-detail">
+          Don't have PayPal? No problem — you'll receive a link and can pay by card without signing up.
+        </div>
+        <a href="https://paypal.me/YOUR-PAYPAL-HERE" target="_blank" class="pay-card-action">Pay via PayPal ↗</a>
+      </div>
+
     </div>
+
+    <!-- INDIVIDUAL COSTS -->
+    <div class="costs-intro">
+      <div style="font-size:14px; color:rgba(255,255,255,0.45);">Tap a name to expand the full breakdown</div>
+      <div class="costs-total-pill">Total Trip: £9,344.64</div>
+    </div>
+
+    <div class="person-grid">
+
+      <!--
+        ════════════════════════════════════
+        HOW TO MARK SOMEONE AS PAID:
+        Add the class "paid" to the .person-card div
+        e.g. <div class="person-card paid">
+        ════════════════════════════════════
+      -->
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Dan</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£779.38</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Airport lunch</span><span class="breakdown-amount">£53.43</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£60.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Brunch (Mila)</span><span class="breakdown-amount">£0.00</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£779.38</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Rik</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£800.18</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Airport lunch</span><span class="breakdown-amount">£53.43</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£60.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Brunch (Mila)</span><span class="breakdown-amount">£20.80</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£800.18</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Craig</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£412.66</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£208.09</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£39.84</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£412.66</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Ben Ellis</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£752.47</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Airport lunch</span><span class="breakdown-amount">£53.43</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£39.84</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Brunch (Mila)</span><span class="breakdown-amount">£20.80</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£752.47</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Mouse</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£560.24</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£39.84</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Brunch (Mila)</span><span class="breakdown-amount">£20.80</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£560.24</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Weino</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£780.02</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Airport lunch</span><span class="breakdown-amount">£53.43</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£39.84</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Brunch (Mila)</span><span class="breakdown-amount">£20.80</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£780.02</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Taco</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£456.44</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£456.44</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Kane</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£654.79</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£39.84</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£654.79</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Chatz</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£456.44</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£456.44</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Eppy</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£448.89</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£20.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£448.89</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Jakey</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£448.89</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£20.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£448.89</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Simmo</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£502.05</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£30.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£502.05</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Josh G</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£502.05</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£30.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£502.05</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Nick W</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£502.05</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£230.78</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£30.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£502.05</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Roger</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£561.50</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Airport lunch</span><span class="breakdown-amount">£21.28</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£561.50</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="person-card" onclick="toggleCard(this)">
+        <div class="person-card-header">
+          <div class="person-name-wrap">
+            <div class="person-name">Brosgil</div>
+            <span class="paid-badge">✓ Paid</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="person-amount">£726.59</div>
+            <div class="expand-arrow">▼</div>
+          </div>
+        </div>
+        <div class="person-breakdown">
+          <div class="breakdown-row"><span class="breakdown-label">Accommodation</span><span class="breakdown-amount">£327.20</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Ramiro</span><span class="breakdown-amount">£47.75</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Park Bar</span><span class="breakdown-amount">£22.18</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Boat</span><span class="breakdown-amount">£70.47</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach lunch</span><span class="breakdown-amount">£43.16</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Beach drinks &amp; beds</span><span class="breakdown-amount">£39.84</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Oeiras lunch</span><span class="breakdown-amount">£51.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Chicken dinner</span><span class="breakdown-amount">£38.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Photus Club</span><span class="breakdown-amount">£13.64</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – tickets</span><span class="breakdown-amount">£25.00</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Bloom – drinks</span><span class="breakdown-amount">£27.55</span></div>
+          <div class="breakdown-row"><span class="breakdown-label">Brunch (Mila)</span><span class="breakdown-amount">£20.80</span></div>
+          <div class="breakdown-total-row">
+            <span class="breakdown-total-label">Total</span>
+            <span class="breakdown-total-amount">£726.59</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /person-grid -->
+
   </div>
 </div>
 
@@ -1112,7 +1895,7 @@ function updateCountdowns() {
     const m = Math.floor((sd % 3600000)  / 60000);
     document.getElementById('stag-countdown').textContent = `${d}d  ${pad(h)}h  ${pad(m)}m`;
   } else {
-    document.getElementById('stag-countdown').textContent = 'THIS WEEKEND';
+    document.getElementById('stag-countdown').textContent = 'IT HAPPENED';
   }
 
   const wd = wedding - now;
@@ -1141,6 +1924,11 @@ function updateTabs() {
   tabs.forEach((tab, i) => tab.classList.toggle('active', dayIds[i] === current));
 }
 window.addEventListener('scroll', updateTabs, { passive: true });
+
+// ── PERSON CARD EXPAND ──
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
 </script>
 </body>
 </html>
