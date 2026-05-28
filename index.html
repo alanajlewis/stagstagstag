@@ -921,6 +921,44 @@
   }
 
   /* ══════════════════════════════
+     FEEDBACK / SURVEY
+  ══════════════════════════════ */
+  .feedback-intro {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--lime);
+    border: 3px solid var(--black);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+
+  .feedback-intro-emoji {
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .feedback-intro-text {
+    font-size: 15px;
+    color: var(--black);
+    line-height: 1.5;
+  }
+
+  .feedback-intro-text strong {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .feedback-frame-wrap {
+    border: 3px solid var(--black);
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  /* ══════════════════════════════
      RESPONSIVE
   ══════════════════════════════ */
   @media (max-width: 720px) {
@@ -983,6 +1021,7 @@
   <a href="#day2">Sat 16</a>
   <a href="#rooms">Rooms</a>
   <a href="#notes">Good to Know</a>
+  <a href="#feedback" style="background: var(--lime); color: var(--black) !important; font-weight: 800; letter-spacing: 1px; padding: 14px 24px; border-left: 3px solid rgba(255,255,255,0.15);">📋 RATE THE STAG</a>
 </nav>
 
 <!-- ══ SETTLE UP ══ -->
@@ -1509,6 +1548,28 @@
   </div>
 </div>
 
+<!-- ══ FEEDBACK ══ -->
+<div class="page-section" id="feedback" style="background: var(--lime); border-bottom: 3px solid var(--black);">
+  <div class="section-inner">
+    <div class="section-heading" style="color: var(--black);">Rate the Stag 📋</div>
+
+    <div class="feedback-frame-wrap">
+      <iframe
+        data-tally-src="https://tally.so/embed/zxLX9g?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+        loading="lazy"
+        width="100%"
+        height="600"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="Rate the Stag"
+        style="display:block;"
+      ></iframe>
+    </div>
+
+  </div>
+</div>
+
 <!-- ══ COUNTDOWNS ══ -->
 <div class="countdowns" id="countdowns">
   <div class="countdown-box">
@@ -1886,6 +1947,11 @@
 </div>
 
 <script>
+// ── TALLY EMBED ──
+var d = document, w = "https://tally.so/widgets/embed.js",
+  v = function() { if (typeof Tally !== "undefined") { Tally.loadEmbeds(); } else { d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e) { e.src = e.dataset.tallySrc; }); } };
+if (typeof Tally !== "undefined") { v(); } else if (d.querySelector('script[src="' + w + '"]') == null) { var s = d.createElement("script"); s.src = w; s.onload = v; s.onerror = v; d.body.appendChild(s); }
+
 // ── COUNTDOWNS ──
 function pad(n) { return String(n).padStart(2, '0'); }
 
